@@ -10,6 +10,8 @@ public class PlayerDTO {
     @JsonIgnore
         private int partieJoue;
 
+        private long id;
+
         private int classement;
         private String name;
         private String partie;
@@ -56,4 +58,13 @@ public class PlayerDTO {
     public void setClassement(int classement) {
         this.classement = classement;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
+

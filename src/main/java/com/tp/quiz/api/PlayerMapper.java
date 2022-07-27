@@ -15,6 +15,7 @@ public class PlayerMapper {
             dto.setPartieGagne(player.getScore());
             dto.setPartieJoue(player.getPartie());
             dto.setName(player.getName());
+            dto.setId(player.getId());
 
         return dto;
     }

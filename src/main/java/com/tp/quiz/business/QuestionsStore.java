@@ -49,6 +49,8 @@ public class QuestionsStore implements QuestionsStoreInterface {
         return questionRepository.findById(idQuestion).get();
     }
 
+    public Question getRandomQuestion(){return questionRepository.findRandom();}
+
     public Answer getAnswerById(Long idAnswer) {
         return answerRepository.findById(idAnswer).get();
     }
@@ -103,7 +105,7 @@ public class QuestionsStore implements QuestionsStoreInterface {
     public List<PlayerDTO> getPlayerDTOByScore() {
         List<PlayerDTO> dtos=new ArrayList<PlayerDTO>();
         int classement=0;
-        for (Player player : playerRepository.findAllByOrderByScoreAsc()){
+        for (Player player : playerRepository.findAllByOrderByScoreDesc()){
             classement++;
             PlayerDTO playerDTO = PlayerMapper.convertToPlayerDTO(player);
             playerDTO.setClassement(classement);
