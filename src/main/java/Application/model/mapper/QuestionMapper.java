@@ -1,17 +1,14 @@
-package com.tp.quiz.api;
+package Application.model.mapper;
 
-import com.tp.quiz.business.Answer;
-import com.tp.quiz.business.Question;
-
-import java.util.ArrayList;
-import java.util.List;
+import Application.model.dto.QuestionDTO;
+import Application.model.entity.Question;
 
 public class QuestionMapper {
 
         public static QuestionDTO convertToDTO(Question question){
                 QuestionDTO dto = new QuestionDTO();
                 dto.setId(question.getId());
-                dto.setAnswers(AnswerMapper.convertToDTO(question.getAnswers()));
+                dto.setAnswers(question.getAnswers());
                 dto.setTitle(question.getTitle());
                 return dto;
             }
@@ -21,10 +18,11 @@ public class QuestionMapper {
                 Question question = new Question();
 
                 question.setId(questionDTO.getId());
-                question.setAnswers(AnswerMapper.convertToAnswer(questionDTO.getAnswersDTO()));
+                question.setAnswers(questionDTO.getAnswers());
                 question.setTitle(questionDTO.getTitle());
             return question;
             }
+
 
         }
 

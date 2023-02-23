@@ -1,10 +1,7 @@
-package com.tp.quiz.api;
+package Application.model.mapper;
 
-import com.tp.quiz.business.Answer;
-import com.tp.quiz.business.Player;
-
-import java.util.ArrayList;
-import java.util.List;
+import Application.model.dto.PlayerDTO;
+import Application.model.entity.Player;
 
 public class PlayerMapper {
 

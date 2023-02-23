@@ -1,4 +1,4 @@
-package com.tp.quiz.business;
+package Application.model.entity;
 
 import javax.persistence.*;
 

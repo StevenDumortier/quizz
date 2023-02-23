@@ -1,17 +1,23 @@
-package com.tp.quiz.business;
+package Application.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
+//@Getter
+//@Setter
+//@ToString
+//@Builder
 @Table(name = "answers")
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-
         private String title;
 
        @ManyToOne
@@ -20,12 +26,12 @@ public class Answer {
         private Question question;
 
         @Column(name = "correct_answer")
-        private boolean correctAnswer;
+        private Boolean correctAnswer;
 
         public Answer() {
         }
 
-        public Answer(String title, boolean correctAnswer) {
+        public Answer(String title, Boolean correctAnswer) {
             this.title = title;
             this.correctAnswer = correctAnswer;
         }

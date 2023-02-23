@@ -1,4 +1,4 @@
-package com.tp.quiz.api;
+package Application.controller;
 
 public class MelangeIDPlay {
     private Long player;

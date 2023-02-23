@@ -1,6 +1,6 @@
-package com.tp.quiz.dao;
+package Application.repository;
 
-import com.tp.quiz.business.Question;
+import Application.model.entity.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

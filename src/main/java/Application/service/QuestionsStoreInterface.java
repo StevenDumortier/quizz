@@ -1,4 +1,8 @@
-package com.tp.quiz.business;
+package Application.service;
+
+import Application.model.entity.Answer;
+import Application.model.entity.Player;
+import Application.model.entity.Question;
 
 import java.util.List;
 

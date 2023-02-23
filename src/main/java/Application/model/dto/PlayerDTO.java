@@ -1,8 +1,6 @@
-package com.tp.quiz.api;
+package Application.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
 
 public class PlayerDTO {
     @JsonIgnore

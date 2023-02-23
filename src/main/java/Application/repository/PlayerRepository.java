@@ -1,8 +1,6 @@
-package com.tp.quiz.dao;
+package Application.repository;
 
-import com.tp.quiz.api.PlayerDTO;
-import com.tp.quiz.business.Answer;
-import com.tp.quiz.business.Player;
+import Application.model.entity.Player;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,16 +1,20 @@
-package com.tp.quiz.business;
+package Application.service;
 
 
-import com.tp.quiz.api.PlayerDTO;
-import com.tp.quiz.api.PlayerMapper;
-import com.tp.quiz.dao.AnswerRepository;
-import com.tp.quiz.dao.PlayerRepository;
-import com.tp.quiz.dao.QuestionRepository;
+import Application.model.dto.PlayerDTO;
+import Application.model.dto.QuestionDTO;
+import Application.model.entity.Answer;
+import Application.model.entity.Player;
+import Application.model.entity.Question;
+import Application.model.mapper.PlayerMapper;
+import Application.model.mapper.QuestionMapper;
+import Application.repository.AnswerRepository;
+import Application.repository.PlayerRepository;
+import Application.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -94,6 +98,14 @@ public class QuestionsStore implements QuestionsStoreInterface {
         questionRepository.save(question);
     }
 
+    public void addQuestionAndAnswers(QuestionDTO questionDTO){
+        Question question = QuestionMapper.convertToQuestion(questionDTO);
+        for( int i=0; i<question.getAnswers().size();i++){
+            question.getAnswers().get(i).setQuestion(question);
+        }
+        questionRepository.save(question);
+    }
+
     public List<PlayerDTO> getPlayerDTO() {
         List<PlayerDTO> dtos=new ArrayList<>();
         for (Player player : playerRepository.findAll()){
@@ -114,16 +126,16 @@ public class QuestionsStore implements QuestionsStoreInterface {
         return dtos;
 
     }
-//    public void patchQuestionAndAnswers(Question question, Long id){
-//
-//        if (question.getId().equals(id)){
-//            for( int i=0; i<question.getAnswers().size();i++){
-//                question.getAnswers().get(i).setQuestion(question);
-//            }
-//            questionRepository.save(question);
-//        }
-//
-//        }
+    public void patchQuestionAndAnswers(Question question, Long id){
+
+        if (question.getId().equals(id)){
+            for( int i=0; i<question.getAnswers().size();i++){
+                question.getAnswers().get(i).setQuestion(question);
+            }
+            questionRepository.save(question);
+        }
+
+        }
 
 
 }

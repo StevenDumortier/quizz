@@ -1,15 +1,15 @@
-package com.tp.quiz.api;
+package Application.model.dto;
 
-import com.tp.quiz.business.Question;
+import Application.model.entity.Question;
 
-public class AnswerDTO {
+public class AnswerDto {
         private Long id;
         private String title;
         private Question question;
         private boolean correctAnswer;
 
 
-        public AnswerDTO() {
+        public AnswerDto() {
         }
 
         public Long getId() {
