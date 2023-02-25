@@ -1,4 +1,4 @@
-package Application.model.mapper;
+package Application.model.dto;
 
 import Application.model.entity.Answer;
 import Application.model.dto.AnswerDto;

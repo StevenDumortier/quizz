@@ -2,33 +2,33 @@ package Application.service;
 
 
 import Application.model.dto.PlayerDTO;
-import Application.model.dto.QuestionDTO;
+import Application.model.dto.PlayerMapper;
+import Application.model.dto.QuestionDto;
+import Application.model.dto.QuestionMapper;
 import Application.model.entity.Answer;
 import Application.model.entity.Player;
 import Application.model.entity.Question;
-import Application.model.mapper.PlayerMapper;
-import Application.model.mapper.QuestionMapper;
 import Application.repository.AnswerRepository;
 import Application.repository.PlayerRepository;
 import Application.repository.QuestionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+public class QuestionService implements QuestionServiceInterface {
 
-public class QuestionsStore implements QuestionsStoreInterface {
 
-    @Autowired
-    QuestionRepository questionRepository;
+    private AnswerRepository answerRepository;
+    private PlayerRepository playerRepository;
+    private QuestionRepository questionRepository;
 
-    @Autowired
-    AnswerRepository answerRepository;
-
-    @Autowired
-    PlayerRepository playerRepository;
+    public QuestionService(AnswerRepository answerRepository, PlayerRepository playerRepository, QuestionRepository questionRepository) {
+        this.answerRepository = answerRepository;
+        this.playerRepository = playerRepository;
+        this.questionRepository = questionRepository;
+    }
 
 
     public void addQuestion(Question question) {
@@ -41,19 +41,23 @@ public class QuestionsStore implements QuestionsStoreInterface {
             answerRepository.save(answers.get(i));
         }
     }
-    public void addPlayer(Player player){
+
+    public void addPlayer(Player player) {
         playerRepository.save(player);
     }
 
-    public List<Question> getQuestions() {
-        return questionRepository.findAll();
+    public List<QuestionDto> getQuestions() {
+        List<QuestionDto> questionDtos = QuestionMapper.INSTANCE.mapToQuestionDtos(questionRepository.findAll());
+        return questionDtos;
     }
 
     public Question getQuestionById(Long idQuestion) {
         return questionRepository.findById(idQuestion).get();
     }
 
-    public Question getRandomQuestion(){return questionRepository.findRandom();}
+    public Question getRandomQuestion() {
+        return questionRepository.findRandom();
+    }
 
     public Answer getAnswerById(Long idAnswer) {
         return answerRepository.findById(idAnswer).get();
@@ -62,6 +66,7 @@ public class QuestionsStore implements QuestionsStoreInterface {
     public Player getPlayerById(Long idPlayer) {
         return playerRepository.findById(idPlayer).get();
     }
+
     public PlayerDTO getPlayerDTOById(Long idPlayer) {
         return PlayerMapper.convertToPlayerDTO(playerRepository.findById(idPlayer).get());
     }
@@ -74,7 +79,7 @@ public class QuestionsStore implements QuestionsStoreInterface {
         answerRepository.deleteById(idAnswer);
     }
 
-    public void updateQuestion(Question question,Long idQuestion) {
+    public void updateQuestion(Question question, Long idQuestion) {
         question.setId(idQuestion);
         questionRepository.save(question);
     }
@@ -90,34 +95,35 @@ public class QuestionsStore implements QuestionsStoreInterface {
         playerRepository.save(player);
     }
 
-    public void addQuestionAndAnswers(Question question){
+    public void addQuestionAndAnswers(Question question) {
 
-        for( int i=0; i<question.getAnswers().size();i++){
-          question.getAnswers().get(i).setQuestion(question);
+        for (int i = 0; i < question.getAnswers().size(); i++) {
+            question.getAnswers().get(i).setQuestion(question);
         }
         questionRepository.save(question);
     }
 
-    public void addQuestionAndAnswers(QuestionDTO questionDTO){
-        Question question = QuestionMapper.convertToQuestion(questionDTO);
-        for( int i=0; i<question.getAnswers().size();i++){
+    public void addQuestionAndAnswers(QuestionDto questionDTO) {
+        Question question = QuestionMapper.INSTANCE.mapToQuestion(questionDTO);
+        for (int i = 0; i < question.getAnswers().size(); i++) {
             question.getAnswers().get(i).setQuestion(question);
         }
         questionRepository.save(question);
     }
 
     public List<PlayerDTO> getPlayerDTO() {
-        List<PlayerDTO> dtos=new ArrayList<>();
-        for (Player player : playerRepository.findAll()){
-            dtos.add(PlayerMapper.convertToPlayerDTO(player));}
+        List<PlayerDTO> dtos = new ArrayList<>();
+        for (Player player : playerRepository.findAll()) {
+            dtos.add(PlayerMapper.convertToPlayerDTO(player));
+        }
         return dtos;
 
     }
 
     public List<PlayerDTO> getPlayerDTOByScore() {
-        List<PlayerDTO> dtos=new ArrayList<PlayerDTO>();
-        int classement=0;
-        for (Player player : playerRepository.findAllByOrderByScoreDesc()){
+        List<PlayerDTO> dtos = new ArrayList<PlayerDTO>();
+        int classement = 0;
+        for (Player player : playerRepository.findAllByOrderByScoreDesc()) {
             classement++;
             PlayerDTO playerDTO = PlayerMapper.convertToPlayerDTO(player);
             playerDTO.setClassement(classement);
@@ -126,16 +132,17 @@ public class QuestionsStore implements QuestionsStoreInterface {
         return dtos;
 
     }
-    public void patchQuestionAndAnswers(Question question, Long id){
 
-        if (question.getId().equals(id)){
-            for( int i=0; i<question.getAnswers().size();i++){
+    public void patchQuestionAndAnswers(Question question, Long id) {
+
+        if (question.getId().equals(id)) {
+            for (int i = 0; i < question.getAnswers().size(); i++) {
                 question.getAnswers().get(i).setQuestion(question);
             }
             questionRepository.save(question);
         }
 
-        }
+    }
 
 
 }
